@@ -1,0 +1,87 @@
+kind: source
+spec:
+  ## Required. name of the plugin to use.
+  ## This should be unique if you have number of aws plugins.
+  name: "aws"
+
+  ## Optional. Where to search for the plugin. Default: "github". Options: "github", "local", "grpc"
+  registry: "github"
+
+  ## Path for the plugin.
+  ## If registry is "github" path should be "repo/name"
+  ## If registry is "local", path is path to binary.
+  ## If "grpc" then it should be address of the plugin (usually useful in debug).
+  path: "cloudquery/aws"
+
+  ## Required. Must be a specific version starting with v, e.g. v1.2.3
+  ## checkout latest versions here https://github.com/cloudquery/cloudquery/releases?q=plugins-source-aws&expanded=true
+  version: "v22.19.2"
+
+  ## Required. all destinations you want to sync data to.
+  destinations: ["postgresql"]
+
+  ## Required. A flag that indicates whether the value of _cq_id should be a UUID that is a hash of the primary keys
+  deterministic_cq_id: true
+
+  ## Optional. A list of tables to skip during sync
+  # skip_tables:
+
+  ## Optional. Default: ["*"] - all tables. We recommend to specify specific tables that you need to sync as this
+  ## will reduce the amount of data synced and improve performance.
+  ## See all tables: https://github.com/cloudquery/cloudquery/blob/main/plugins/source/aws/docs/tables/README.md
+  tables:    
+    - aws_ec2_instances
+    - aws_iam_accounts
+    - aws_organizations
+    - aws_organizations_accounts
+    - aws_s3_buckets
+
+  spec:
+    ## Required. A flag that indicates that data shall be synced from APIs that incur a fee.
+    ## Currently only aws_costexplorer* tables require this to be true.
+    use_paid_apis: true
+
+    # default 50000
+    concurrency: 50000
+
+    # regions:
+    #   - us-east-1
+    #   - us-east-2
+    #   - us-west-1
+    #   - us-west-2
+
+    # SSO Single account
+    # accounts:
+    #   - id: "111122223333"
+    #     local_profile: "profile_name"
+
+    # SSO Multipe accounts
+    # Required. In AWS organization mode, CloudQuery will source all accounts underneath automatically
+    # org:
+    #   admin_account:
+    #     local_profile: "profile_name"
+
+    #   # Required. Role name that CloudQuery should use to assume a role in the member account from the admin account
+    #   member_role_name: "MemberRoleName"
+
+    #   # Optional. List of OU member accounts to skip.
+    #   skip_member_accounts:
+    #     - "222233334444"
+
+    # Programmatic user access multiple accounts 
+    # Required. In AWS organization mode, CloudQuery will source all accounts underneath automatically
+    # org:
+    #   admin_account:
+    #     # Required. Role to assume in the Org Master account
+    #     role_arn: arn:aws:iam::111122223333:role/MemberRoleName
+
+    #   # Required. Configuration for how to specify the principle to use in order to assume a role in the member accounts
+    #   member_trusted_principal:
+    #     id: "default-credentials"
+
+    #   # Required. Role name that CloudQuery should use to assume a role in the member account from the admin account
+    #   member_role_name: "MemberRoleName"
+
+    #   # Optional. List of OU member accounts to skip.
+    #   skip_member_accounts:
+    #     - "222233334444"

@@ -1,0 +1,10 @@
+# CloudQuery directories
+.cq
+
+# CloudQuery configurations
+configuration/destination/*.yml
+configuration/migration/*.yml
+configuration/source/*.yml
+
+# Shell
+.sh

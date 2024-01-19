@@ -1,0 +1,22 @@
+AWSTemplateFormatVersion: 2010-09-09
+Description: Configure the ReadOnly role for CloudQuery
+# -----------------------------------------------------------------------------
+# Resources
+# -----------------------------------------------------------------------------
+Resources:
+  CloudQueryRole:
+    Type: AWS::IAM::Role
+    Properties:
+      RoleName: 'CloudQueryRole'
+      AssumeRolePolicyDocument:
+        Version: 2012-10-17
+        Statement:
+          - Effect: Allow
+            Principal:
+              AWS:
+                - '440526397198'              
+            Action:
+              - 'sts:AssumeRole'
+      Path: /
+      ManagedPolicyArns:
+        - arn:aws:iam::aws:policy/ReadOnlyAccess

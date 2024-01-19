@@ -1,0 +1,32 @@
+kind: source
+spec:
+  ## Required. name of the plugin to use.
+  ## This should be unique if you have number of aws plugins.
+  name: "aws"
+
+  ## Optional. Where to search for the plugin. Default: "github". Options: "github", "local", "grpc"
+  registry: "github"
+
+  ## Path for the plugin.
+  ## If registry is "github" path should be "repo/name"
+  ## If registry is "local", path is path to binary.
+  ## If "grpc" then it should be address of the plugin (usually useful in debug).
+  path: "cloudquery/aws"
+
+  ## Required. Must be a specific version starting with v, e.g. v1.2.3
+  ## checkout latest versions here https://github.com/cloudquery/cloudquery/releases?q=plugins-source-aws&expanded=true
+  version: "v22.19.2"
+
+  ## Optional. A list of tables to skip during sync
+  # skip_tables: []
+
+  ## Required. Default: ["*"] - all tables. We recommend specifying specific tables that you need to sync as this
+  ## will reduce the amount of data synced and improve performance.
+  ## See all tables: https://github.com/cloudquery/cloudquery/blob/main/plugins/source/aws/docs/tables/README.md
+  tables: ["*"]
+
+  ## Required. all destinations you want to sync data to.
+  destinations: ["postgresql"]
+
+  ## Required. A flag that indicates whether the value of _cq_id should be a UUID that is a hash of the primary keys
+  deterministic_cq_id: true
